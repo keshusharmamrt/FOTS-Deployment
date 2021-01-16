@@ -7,15 +7,10 @@ import numpy as np
 import pandas as pd
 import os
 import math
-import csv
 import cv2
 import time
 import numpy as np
-import scipy.optimize
-import matplotlib.pyplot as plt
-import matplotlib.patches as Patches
 from shapely.geometry import Polygon
-import random
 from PIL import Image
 PAGE_CONFIG = {"page_title":"FOTS:Scene Text Parsing","layout":"centered"}
 st.set_page_config(**PAGE_CONFIG)
