@@ -299,68 +299,68 @@ for i,val in enumerate(CHAR_VECTOR):
 @st.cache
 def load_main_models():
   # This is deconv layer that we have in our text detection branch
-#   class Deconv(tf.keras.layers.Layer):
-#     def __init__(self,name="deconv"):
-#       super().__init__(name)
-#       self.inp_size=0
-#       self.conv=None
-#       self.upsample=None
-#       self.bn=None
-#     def build(self,imshape):
-#       self.inp_size=imshape
-#       self.bn=tf.keras.layers.BatchNormalization()
-#       self.conv=tf.keras.layers.Conv2D(filters=self.inp_size[-1]//2,kernel_size=3,padding='same',activation='relu',kernel_initializer=tf.keras.initializers.GlorotNormal(seed=12),use_bias=False)
-#       self.upsample=tf.keras.layers.UpSampling2D(size=(2,2),interpolation='bilinear',data_format='channels_last',)
-#     def call(self,X):
-#       x1=self.upsample(X)
-#       x1=self.conv(x1)
-#       x1=self.bn(x1)
-#       x1=tf.keras.activations.relu(x1)
-#       return x1
-#   resnet=tf.keras.applications.ResNet50(input_shape=(512,512,3),include_top=False,weights='imagenet')
-#   tf.keras.backend.clear_session()
-#   layers=resnet.layers
-#   x1,x2,x3,x4=None,None,None,None
-#   for i in range(len(layers)):
-#     x=layers[i]
-#     if x.name=='pool1_pool':
-#       x1=x
-#     if x.name=='conv3_block1_1_conv':
-#       x2=x
-#     if x.name=='conv4_block1_1_conv':
-#       x3=x   
-#     if x.name=='conv5_block3_2_conv':
-#       x4=x  
-#   #  input_1 ,conv1_relu
-#   d=x4.output
-#   d=Deconv('deconv1')(d)
-#   d=tf.keras.layers.add([d,x3.output])
+  class Deconv(tf.keras.layers.Layer):
+    def __init__(self,name="deconv"):
+      super().__init__(name)
+      self.inp_size=0
+      self.conv=None
+      self.upsample=None
+      self.bn=None
+    def build(self,imshape):
+      self.inp_size=imshape
+      self.bn=tf.keras.layers.BatchNormalization()
+      self.conv=tf.keras.layers.Conv2D(filters=self.inp_size[-1]//2,kernel_size=3,padding='same',activation='relu',kernel_initializer=tf.keras.initializers.GlorotNormal(seed=12),use_bias=False)
+      self.upsample=tf.keras.layers.UpSampling2D(size=(2,2),interpolation='bilinear',data_format='channels_last',)
+    def call(self,X):
+      x1=self.upsample(X)
+      x1=self.conv(x1)
+      x1=self.bn(x1)
+      x1=tf.keras.activations.relu(x1)
+      return x1
+  resnet=tf.keras.applications.ResNet50(input_shape=(512,512,3),include_top=False,weights='imagenet')
+  tf.keras.backend.clear_session()
+  layers=resnet.layers
+  x1,x2,x3,x4=None,None,None,None
+  for i in range(len(layers)):
+    x=layers[i]
+    if x.name=='pool1_pool':
+      x1=x
+    if x.name=='conv3_block1_1_conv':
+      x2=x
+    if x.name=='conv4_block1_1_conv':
+      x3=x   
+    if x.name=='conv5_block3_2_conv':
+      x4=x  
+  #  input_1 ,conv1_relu
+  d=x4.output
+  d=Deconv('deconv1')(d)
+  d=tf.keras.layers.add([d,x3.output])
 
-#   d=Deconv('deconv2')(d)
-#   d=tf.keras.layers.add([d,x2.output])
+  d=Deconv('deconv2')(d)
+  d=tf.keras.layers.add([d,x2.output])
 
-#   d=Deconv('deconv3')(d)
-#   d=tf.keras.layers.add([d,x1.output])
-#   d=tf.keras.layers.BatchNormalization()(d)
-#   d=Deconv('deconv4')(d)
-#   d=Deconv('deconv5')(d)
-#   score=tf.keras.layers.Conv2D(1,kernel_size=3,padding='same',activation='sigmoid')(d)
+  d=Deconv('deconv3')(d)
+  d=tf.keras.layers.add([d,x1.output])
+  d=tf.keras.layers.BatchNormalization()(d)
+  d=Deconv('deconv4')(d)
+  d=Deconv('deconv5')(d)
+  score=tf.keras.layers.Conv2D(1,kernel_size=3,padding='same',activation='sigmoid')(d)
 
-#   # Used this beacause sigmoid gives values in range of 0-1(as mentioned in git repository)
-#   geo_map=tf.keras.layers.Conv2D(4,kernel_size=3,padding='same',activation='sigmoid')(d)*512
-#   #Angles are assumed to be between [-45 to 45]
-#   angle_map=(tf.keras.layers.Conv2D(1,kernel_size=3,padding='same',activation='sigmoid')(d)-0.5)*np.pi/2
-#   out=tf.concat([score,geo_map,angle_map],axis=3)
-#   detector=tf.keras.Model(resnet.input,out,name='detector')
-
-#   for layers in resnet.layers:
-#     layers.trainable=False 
-#   detector.load_weights('detector_best.h5')
+  # Used this beacause sigmoid gives values in range of 0-1(as mentioned in git repository)
+  geo_map=tf.keras.layers.Conv2D(4,kernel_size=3,padding='same',activation='sigmoid')(d)*512
+  #Angles are assumed to be between [-45 to 45]
+  angle_map=(tf.keras.layers.Conv2D(1,kernel_size=3,padding='same',activation='sigmoid')(d)-0.5)*np.pi/2
+  out=tf.concat([score,geo_map,angle_map],axis=3)
+  detector=tf.keras.Model(resnet.input,out,name='detector')
+  
+  size=os.path.getsize('detector_best.h5')+os.path.getsize('recognizer_best.h5')
+  for layers in resnet.layers:
+    layers.trainable=False 
+  detector.load_weights('detector_best.h5')
    
   
   
   #Text Recognition Model
-  detector=None
   #Here I have changed the architecture a bit as mentioned in FOTS paper
   inputs = tf.keras.layers.Input(name='the_input', shape=(64,128,3), dtype='float32')  
 
@@ -405,8 +405,8 @@ def load_main_models():
   
   
   recognizer.load_weights('recognizer_best.h5')
-  size=os.path.getsize('recognizer_best.h5')
-#   size=os.path.getsize('detector_best.h5')+os.path.getsize('recognizer_best.h5')
+  
+  
   return detector,recognizer,size
 
 ## CODE TO GET DYNAMIC POST TRAINING QUNATIZATION MODEL
