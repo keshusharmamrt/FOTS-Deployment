@@ -4,8 +4,6 @@ import tensorflow as tf
 import numpy as np
 import cv2
 import numpy as np
-import threading
-import shutil
 import pandas as pd
 import os
 import math
