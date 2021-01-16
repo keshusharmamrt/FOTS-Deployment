@@ -2,7 +2,7 @@ numpy>=1.9.2
 scikit-learn==0.22.1
 pandas>=0.19
 streamlit
-tensorflow==2.4.0
+tensorflow-cpu==2.4.0
 shapely
 Pillow
 opencv-python
