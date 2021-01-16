@@ -10,6 +10,5 @@ pandas>=0.19
 streamlit
 tensorflow-cpu
 shapely
-Pillow
 opencv-contrib-python-headless
 flasgger==0.9.4
