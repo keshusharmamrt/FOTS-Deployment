@@ -6,7 +6,7 @@ pandas>=0.19
 streamlit
 tensorflow==2.4.0
 shapely
-PIL
+Pillow
 cv2
 csv
 time
