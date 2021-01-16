@@ -1,5 +1,7 @@
 numpy>=1.9.2
 gunicorn==19.9.0
+itsdangerous==1.1.0
+Flask==1.1.1
 Jinja2==2.10.1
 MarkupSafe==1.1.1
 Werkzeug==0.15.5
@@ -10,4 +12,4 @@ tensorflow-cpu==2.4.0
 shapely
 Pillow
 opencv-python
-
+flasgger==0.9.4
