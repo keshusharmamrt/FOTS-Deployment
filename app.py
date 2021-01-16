@@ -427,7 +427,7 @@ def load_dynamic_quantized_models():
 ## CODE TO GET FLOAT16 POST TRAINING QUANTIZATION
 @st.cache
 def load_float16_quantized_models():
-  detector_quantized = tf.lite.Interpreter(model_path=".quantized_detector_float16.tflite")
+  detector_quantized = tf.lite.Interpreter(model_path="quantized_detector_float16.tflite")
   detector_quantized.allocate_tensors()
   # Get input and output tensors.
   input_details_detector = detector_quantized.get_input_details()
