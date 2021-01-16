@@ -6,3 +6,4 @@ tensorflow
 shapely
 opencv-contrib-python-headless
 h5py
+keras
