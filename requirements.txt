@@ -7,7 +7,7 @@ streamlit
 tensorflow==2.4.0
 shapely
 Pillow
-cv2
+opencv-python
 csv
 time
 math
