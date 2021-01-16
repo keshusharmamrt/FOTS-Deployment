@@ -11,5 +11,5 @@ streamlit
 tensorflow-cpu==2.4.0
 shapely
 Pillow
-opencv-python
+opencv-contrib-python-headless
 flasgger==0.9.4
