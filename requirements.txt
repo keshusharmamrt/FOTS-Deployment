@@ -8,7 +8,4 @@ tensorflow==2.4.0
 shapely
 Pillow
 opencv-python
-csv
-time
-math
-random
+
