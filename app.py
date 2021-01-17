@@ -479,8 +479,8 @@ def orignal_model_predict(detector,recognizer,size,image):
         cv2.putText(img,txt[i],(pts[i][0][0],pts[i][0][1]),cv2.FONT_HERSHEY_SIMPLEX,0.6, (0, 0, 255), 2)
       end_time=time.time()
       st.image(img)
-      st.subheader("Latency="+str(end_time-start_time)+" seconds") 
-      st.subheader('Model Size='+str(size/2**20)+'MB')
+      st.subheader("Prediction Latency="+str(end_time-start_time)+" seconds") 
+      st.subheader('Orignal Model Size='+str(size/2**20)+'MB')
 
 
 def dynamic_model_predict(det,rec,size,image):
@@ -530,7 +530,7 @@ def dynamic_model_predict(det,rec,size,image):
         cv2.putText(img,txt[i],(pts[i][0][0],pts[i][0][1]),cv2.FONT_HERSHEY_SIMPLEX,0.6, (0, 0, 255), 2)
       end_time=time.time()
       st.image(img)
-      st.subheader("Latency="+str(end_time-start_time)+" seconds")
+      st.subheader("Prediction Latency="+str(end_time-start_time)+" seconds")
       st.subheader('Dynamic Quantized Model Size='+str(size/2**20)+'MB')
 
 
@@ -581,7 +581,7 @@ def float16_model_predict(det,rec,size,image):
           cv2.putText(img,txt[i],(pts[i][0][0],pts[i][0][1]),cv2.FONT_HERSHEY_SIMPLEX,0.6, (0, 0, 255), 2)
         end_time=time.time()
         st.image(img)
-        st.subheader("Latency="+str(end_time-start_time)+" seconds")
+        st.subheader("Prediction Latency="+str(end_time-start_time)+" seconds")
         st.subheader('Float16 Quantized Model Size='+str(size/2**20)+'MB')
 
 
@@ -589,7 +589,7 @@ def float16_model_predict(det,rec,size,image):
 ## MAIN FUNCTION
 def main():
   st.title("FOTS: Scene Text Parsing")
-  menu =["Orignal Model","Dynamic Post Training Qunatized Model","Float16 Post Training Qunatized Model"]
+  menu =["Orignal Model","Dynamic Post Training Quantized Model","Float16 Post Training Quantized Model"]
   choice = st.selectbox('Choose Model you want...',menu)
   images_array=os.listdir('Images')
   index=st.slider("Choose Index of Image on which you want Text Detection(For Default Images)",0,len(images_array)-1,0)
@@ -607,13 +607,13 @@ def main():
       st.subheader('Orignal Model')
       orignal_model_predict(detector_orignal,recognizer_orignal,size_orignal,image)
 
-    elif choice=='Dynamic Post Training Qunatized Model' and btn:
-      st.subheader('Dynamic Post Training Qunatized Model')
+    elif choice=='Dynamic Post Training Quantized Model' and btn:
+      st.subheader('Dynamic Post Training Quantized Model')
       dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
 
     else:
       if btn:
-        st.subheader('Float16 Qunatization')
+        st.subheader('Float16 Quantization Model')
         float16_model_predict(det,rec,size,image)
 
   if uploaded_file is not None:
@@ -627,15 +627,15 @@ def main():
       
 
     ## DYNAMIC POST TRAINING QUANTIZATION  
-    elif choice=='Dynamic Post Training Qunatized Model' and btn:
-      st.subheader('Dynamic Post Training Qunatized Model')
+    elif choice=='Dynamic Post Training Quantized Model' and btn:
+      st.subheader('Dynamic Post Training Quantized Model')
       dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
       
     
     ## FLOAT16 POST TRAINING QUANTIZATION
     else:
       if btn:
-        st.subheader('Float16 Qunatization Model')
+        st.subheader('Float16 Quantization Model')
         float16_model_predict(det,rec,size,image)
         
      
