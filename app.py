@@ -353,10 +353,10 @@ def load_main_models():
   out=tf.concat([score,geo_map,angle_map],axis=3)
   detector=tf.keras.Model(resnet.input,out,name='detector')
   
-  size=os.path.getsize('detector_best.h5')+os.path.getsize('recognizer_best.h5')
+  size=os.path.getsize('detector1.data-00000-of-00001')+os.path.getsize('recognizer_best.h5')
   for layers in resnet.layers:
     layers.trainable=False 
-  detector.load_weights('detector_best.h5')
+  detector.load_weights('detector1')
    
   
   
