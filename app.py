@@ -601,36 +601,38 @@ def main():
   det,rec,size=load_float16_quantized_models()
   
   if uploaded_file is None:
-    img=cv2.imread('Images/'+images_array[index])
-    image=cv2.resize(img,(512,512))
-    st.subheader('Orignal Model')
-    orignal_model_predict(detector_orignal,recognizer_orignal,size_orignal,image)
+    if btn:
+      img=cv2.imread('Images/'+images_array[index])
+      image=cv2.resize(img,(512,512))
+      st.subheader('Orignal Model')
+      orignal_model_predict(detector_orignal,recognizer_orignal,size_orignal,image)
 
     
-    st.subheader('Dynamic Post Training Quantized Model')
-    dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
+      st.subheader('Dynamic Post Training Quantized Model')
+      dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
 
     
-    st.subheader('Float16 Quantization Model')
-    float16_model_predict(det,rec,size,image)
+      st.subheader('Float16 Quantization Model')
+      float16_model_predict(det,rec,size,image)
 
   if uploaded_file is not None:
-    img = Image.open(uploaded_file)
-    image=np.array(img)
-    image=cv2.resize(image,(512,512))
-    ## ORIGNAL MODEL
-    st.subheader('Orignal Model')
-    orignal_model_predict(detector_orignal,recognizer_orignal,size_orignal,image)
+    if btn:
+      img = Image.open(uploaded_file)
+      image=np.array(img)
+      image=cv2.resize(image,(512,512))
+      ## ORIGNAL MODEL
+      st.subheader('Orignal Model')
+      orignal_model_predict(detector_orignal,recognizer_orignal,size_orignal,image)
       
 
-    ## DYNAMIC POST TRAINING QUANTIZATION  
-    st.subheader('Dynamic Post Training Quantized Model')
-    dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
+      ## DYNAMIC POST TRAINING QUANTIZATION  
+      st.subheader('Dynamic Post Training Quantized Model')
+      dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
       
     
-    ## FLOAT16 POST TRAINING QUANTIZATION
-    st.subheader('Float16 Quantization Model')
-    float16_model_predict(det,rec,size,image)
+      ## FLOAT16 POST TRAINING QUANTIZATION
+      st.subheader('Float16 Quantization Model')
+      float16_model_predict(det,rec,size,image)
         
      
 if __name__ == '__main__':
