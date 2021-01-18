@@ -589,8 +589,8 @@ def float16_model_predict(det,rec,size,image):
 ## MAIN FUNCTION
 def main():
   st.title("FOTS: Scene Text Parsing")
-  menu =["Orignal Model","Dynamic Post Training Quantized Model","Float16 Post Training Quantized Model"]
-  choice = st.selectbox('Choose Model you want...',menu)
+  #menu =["Orignal Model","Dynamic Post Training Quantized Model","Float16 Post Training Quantized Model"]
+  #choice = st.selectbox('Choose Model you want...',menu)
   images_array=os.listdir('Images')
   index=st.slider("Choose Index of Image on which you want Text Detection(For Default Images)",0,len(images_array)-1,0)
   
@@ -603,40 +603,34 @@ def main():
   if uploaded_file is None:
     img=cv2.imread('Images/'+images_array[index])
     image=cv2.resize(img,(512,512))
-    if choice== 'Orignal Model' and btn:
-      st.subheader('Orignal Model')
-      orignal_model_predict(detector_orignal,recognizer_orignal,size_orignal,image)
+    st.subheader('Orignal Model')
+    orignal_model_predict(detector_orignal,recognizer_orignal,size_orignal,image)
 
-    elif choice=='Dynamic Post Training Quantized Model' and btn:
-      st.subheader('Dynamic Post Training Quantized Model')
-      dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
+    
+    st.subheader('Dynamic Post Training Quantized Model')
+    dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
 
-    else:
-      if btn:
-        st.subheader('Float16 Quantization Model')
-        float16_model_predict(det,rec,size,image)
+    
+    st.subheader('Float16 Quantization Model')
+    float16_model_predict(det,rec,size,image)
 
   if uploaded_file is not None:
     img = Image.open(uploaded_file)
     image=np.array(img)
     image=cv2.resize(image,(512,512))
     ## ORIGNAL MODEL
-    if choice== 'Orignal Model' and btn:
-      st.subheader('Orignal Model')
-      orignal_model_predict(detector_orignal,recognizer_orignal,size_orignal,image)
+    st.subheader('Orignal Model')
+    orignal_model_predict(detector_orignal,recognizer_orignal,size_orignal,image)
       
 
     ## DYNAMIC POST TRAINING QUANTIZATION  
-    elif choice=='Dynamic Post Training Quantized Model' and btn:
-      st.subheader('Dynamic Post Training Quantized Model')
-      dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
+    st.subheader('Dynamic Post Training Quantized Model')
+    dynamic_model_predict(det_dynamic,rec_dynamic,size_dynamic,image)
       
     
     ## FLOAT16 POST TRAINING QUANTIZATION
-    else:
-      if btn:
-        st.subheader('Float16 Quantization Model')
-        float16_model_predict(det,rec,size,image)
+    st.subheader('Float16 Quantization Model')
+    float16_model_predict(det,rec,size,image)
         
      
 if __name__ == '__main__':
