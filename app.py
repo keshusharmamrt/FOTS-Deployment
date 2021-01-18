@@ -476,7 +476,7 @@ def orignal_model_predict(detector,recognizer,size,image):
           pts.append(points)
       for i in range(len(txt)):
         cv2.polylines(img,[pts[i]],isClosed=True,color=(255,255,0),thickness=2)
-        cv2.putText(img,txt[i],(pts[i][0][0],pts[i][0][1]),cv2.FONT_HERSHEY_SIMPLEX,0.4, (0, 0, 255), 1)
+        cv2.putText(img,txt[i],(pts[i][0][0],pts[i][0][1]),cv2.FONT_HERSHEY_SIMPLEX,0.4, (0, 0, 255), 2)
       end_time=time.time()
       st.image(img)
       st.subheader("Prediction Latency="+str(end_time-start_time)+" seconds") 
@@ -527,7 +527,7 @@ def dynamic_model_predict(det,rec,size,image):
           pts.append(points)
       for i in range(len(txt)):
         cv2.polylines(img,[pts[i]],isClosed=True,color=(255,255,0),thickness=2)
-        cv2.putText(img,txt[i],(pts[i][0][0],pts[i][0][1]),cv2.FONT_HERSHEY_SIMPLEX,0.4, (0, 0, 255), 1)
+        cv2.putText(img,txt[i],(pts[i][0][0],pts[i][0][1]),cv2.FONT_HERSHEY_SIMPLEX,0.4, (0, 0, 255), 2)
       end_time=time.time()
       st.image(img)
       st.subheader("Prediction Latency="+str(end_time-start_time)+" seconds")
@@ -578,7 +578,7 @@ def float16_model_predict(det,rec,size,image):
             pts.append(points)
         for i in range(len(txt)):
           cv2.polylines(img,[pts[i]],isClosed=True,color=(255,255,0),thickness=2)
-          cv2.putText(img,txt[i],(pts[i][0][0],pts[i][0][1]),cv2.FONT_HERSHEY_SIMPLEX,0.4, (0, 0, 255), 1)
+          cv2.putText(img,txt[i],(pts[i][0][0],pts[i][0][1]),cv2.FONT_HERSHEY_SIMPLEX,0.4, (0, 0, 255), 2)
         end_time=time.time()
         st.image(img)
         st.subheader("Prediction Latency="+str(end_time-start_time)+" seconds")
